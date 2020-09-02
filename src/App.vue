@@ -48,6 +48,7 @@ export default {
   &__aside {
     grid-area: aside;
     margin-top: 60px;
+    margin-bottom: 67px;
   }
 
   &__main {
