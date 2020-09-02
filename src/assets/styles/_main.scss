@@ -1,0 +1,194 @@
+@include font("Montserrat", "montserrat", "400", "normal");
+@include font("Montserrat", "montserrat_bold", "700", "normal");
+@include font("PTSans", "ptsans_bold", "700", "normal");
+
+body {
+    background-color: $color_bg;
+    font-family: Montserrat;
+    font-weight: 400;
+    color: $color_font;
+}
+
+.container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    min-height: 100%;
+    min-width: $min_width;
+    max-width: $max_width;
+}
+
+/** */
+.btn {
+    display: block;
+    width: 210px;
+    margin: 0 auto;
+    padding: 0;
+    font-size: 16px;
+    line-height: 38px;
+    color: $color_font_white;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+        color: $color_font_white;
+    }
+
+    &-red {
+        background-color: $color_first;
+
+        &:hover {
+            background-color: #d24335;
+        }
+
+        &:disabled {
+            background-color: #d7d7d7;
+            color: #8d8c8c;
+        }
+    }
+
+    &-white {
+        background: transparent;
+        width: auto;
+        color: $color_first;
+
+        &:hover {
+            color: #d24335;
+        }
+    }
+}
+
+.icon {
+    position: relative;
+    background-color: $color_bg_white;
+    display: block;
+    width: 43px;
+    height: 43px;
+    border: 0;
+    border-radius: 22px;
+    cursor: pointer;
+
+    &__grey {
+        background-color: $color_bg_grey;
+    }
+
+    &__shadow {
+        box-shadow: 0px 10px 40px rgba(213, 221, 230, 0.6);
+    }
+
+    &__bell {
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background-image: url("~@/assets/img/icons.svg#bell");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 20px;
+            height: 20px;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    &__search {
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background-image: url("~@/assets/img/icons.svg#search");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 19px;
+            height: 19px;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    &__arrow {
+        padding: 0 44px 0 26px;
+        width: auto;
+        font-weight: 700;
+        line-height: 43px;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 18px;
+            background-image: url("~@/assets/img/icons.svg#arrow_dwn");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 11px;
+            height: 6px;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+/** TRANSITIONS */
+.slide-fade-c-enter-active,
+.slide-fade-c-leave-active {
+    transition: all 0.8s linear;
+}
+
+.slide-fade-c-enter,
+.slide-fade-c-leave-to {
+    opacity: 0;
+}
+
+/** */
+.slide-fade-r-enter-active {
+    transition: all 0.8s ease;
+}
+
+.slide-fade-r-leave-active {
+    transition: all 0.8s cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
+.slide-fade-r-enter,
+.slide-fade-r-leave-to {
+    transform: translateX(325px);
+    opacity: 0;
+}
+
+/** */
+.slide-fade-l-enter-active {
+    transition: all 0.8s ease;
+}
+
+.slide-fade-l-leave-active {
+    transition: all 0.8s cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
+.slide-fade-l-enter,
+.slide-fade-l-leave-to {
+    transform: translateX(-325px);
+    opacity: 0;
+}
+
+/** */
+.slide-fade-t-enter-active {
+    transition: all 0.8s ease;
+}
+
+.slide-fade-t-leave-active {
+    transition: all 0.8s cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
+.slide-fade-t-enter,
+.slide-fade-t-leave-to {
+    transform: translateY(-325px);
+    opacity: 0;
+}
+
+/** */
+.collapse:not(.show) {
+    display: block;
+}

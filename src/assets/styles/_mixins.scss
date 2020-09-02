@@ -1,0 +1,49 @@
+@mixin for-size($size) {
+    @if $size==phone-only {
+        @media (max-width: 599px) {
+            @content;
+        }
+    }
+
+    @else if $size==tablet-portrait-up {
+        @media (min-width: 600px) {
+            @content;
+        }
+    }
+
+    @else if $size==tablet-landscape-up {
+        @media (min-width: 900px) {
+            @content;
+        }
+    }
+
+    @else if $size==desktop-up {
+        @media (min-width: 1200px) {
+            @content;
+        }
+    }
+
+    @else if $size==big-desktop-up {
+        @media (min-width: 1800px) {
+            @content;
+        }
+    }
+
+    @else {
+        @media (min-width: $size) {
+            @content;
+        }
+    }
+}
+
+@mixin font($font_name, $file_name, $weight, $style) {
+    @font-face {
+        font-family: $font_name;
+        font-display: swap;
+        src: url("assets/fonts/#{$file_name}.ttf") format("truetype"),
+        url("assets/fonts/#{$file_name}.woff") format("woff"),
+        url("assets/fonts/#{$file_name}.woff2") format("woff2");
+        font-weight: #{$weight};
+        font-style: #{$style};
+    }
+}
