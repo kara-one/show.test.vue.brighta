@@ -9,7 +9,7 @@
     </aside>
 
     <main class="content__main">
-      <UsersList></UsersList>
+      <Users></Users>
     </main>
   </div>
 </template>
@@ -20,7 +20,7 @@ export default {
   components: {
     Header: () => import('@/views/Header/Header'),
     LeftMenu: () => import('@/views/LeftMenu/LeftMenu'),
-    UsersList: () => import('@/views/UsersList/UsersList')
+    Users: () => import('@/views/Users/Users')
   }
 };
 </script>

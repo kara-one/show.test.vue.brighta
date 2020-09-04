@@ -35,15 +35,15 @@
       "commonjs": true
     },
     "globals": {
-        "process": true
+      "process": true
     },
     "extends": [
       "plugin:vue/essential",
       "eslint:recommended"
     ],
     "parserOptions": {
-        "ecmaVersion": 2020,
-        "sourceType": "module",
+      "ecmaVersion": 2020,
+      "sourceType": "module",
       "parser": "babel-eslint"
     },
     "rules": {
@@ -57,7 +57,10 @@
         "error"
       ],
       "no-extra-semi": "off",
-      "indent": ["error", 2]
+      "indent": [
+        "error",
+        2
+      ]
     }
   },
   "browserslist": [

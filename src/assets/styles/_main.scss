@@ -20,41 +20,41 @@ body {
 /** */
 .btn {
     display: block;
-    width: 210px;
     margin: 0 auto;
-    padding: 0;
-    font-size: 16px;
-    line-height: 38px;
+    padding: 0 30px;
+    font-size: 14px;
+    line-height: 45px;
+    font-weight: 700;
     color: $color_font_white;
     text-align: center;
     border: none;
-    border-radius: 5px;
+    border-radius: 7px;
     cursor: pointer;
 
     &:hover {
         color: $color_font_white;
     }
 
-    &-red {
+    &_red {
         background-color: $color_first;
 
         &:hover {
-            background-color: #d24335;
+            background-color: $color_first_hover;
         }
 
         &:disabled {
-            background-color: #d7d7d7;
-            color: #8d8c8c;
+            background-color: $color_first_dis;
         }
     }
 
-    &-white {
+    &_white {
         background: transparent;
-        width: auto;
-        color: $color_first;
+        line-height: 41px;
+        color: $color_font;
+        border: 2px solid #000000;
 
         &:hover {
-            color: #d24335;
+            background: $color_font;
         }
     }
 }
