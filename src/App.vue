@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container content">
+  <div id="app" class="content" data-app>
     <header class="content__header">
       <Header></Header>
     </header>
@@ -20,8 +20,8 @@ export default {
   components: {
     Header: () => import('@/views/Header/Header'),
     LeftMenu: () => import('@/views/LeftMenu/LeftMenu'),
-    Users: () => import('@/views/Users/Users')
-  }
+    Users: () => import('@/views/Users/Users'),
+  },
 };
 </script>
 
