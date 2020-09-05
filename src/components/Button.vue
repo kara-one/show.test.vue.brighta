@@ -9,11 +9,11 @@
 
 <script>
 export default {
-  name: "Button",
-  props: ["classButton", "stateButton"],
+  name: 'Button',
+  props: ['classButton', 'stateButton'],
   methods: {
     stateButtonGoParent() {
-      this.$emit("state-button", !this.stateButton);
+      this.$emit('state-button', !this.stateButton);
     }
   }
 };

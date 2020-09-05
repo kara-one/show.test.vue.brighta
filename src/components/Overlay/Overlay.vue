@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "Overlay",
+  name: 'Overlay',
   computed: {
     stateOverlay() {
       return this.$store.getters.STATE_OVERLAY;
@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     closeOverlay() {
-      this.$store.dispatch("CLOSE_OVERLAY");
+      this.$store.dispatch('CLOSE_OVERLAY');
     }
   }
 };

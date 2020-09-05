@@ -111,16 +111,16 @@ export default {
       },
       position: {
         options: [
-          { text: "First radio", value: "first" },
-          { text: "Second radio", value: "second" },
-          { text: "Third radio", value: "third" }
+          { text: 'First radio', value: 'first' },
+          { text: 'Second radio', value: 'second' },
+          { text: 'Third radio', value: 'third' }
         ]
       },
       form: {
-        name: "",
-        email: "",
-        phone: "",
-        position: "",
+        name: '',
+        email: '',
+        phone: '',
+        position: '',
         image: null
       }
     };
@@ -134,9 +134,9 @@ export default {
   methods: {
     getPositions() {
       const options = {
-        method: "get",
+        method: 'get',
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
         url: this.$store.getters.POSITIONS_DATA_GET
       };
@@ -157,21 +157,21 @@ export default {
           });
 
           if (response.data.success === false) {
-            this.error = "Error response data";
-            console.log("-----error-------");
+            this.error = 'Error response data';
+            console.log('-----error-------');
           }
         })
         .catch(error => {
-          console.log("-----error-------");
+          console.log('-----error-------');
           console.log(error);
-          this.error = "Error:" + error;
+          this.error = 'Error:' + error;
         });
     },
     getToken() {
       const options = {
-        method: "get",
+        method: 'get',
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
         url: this.$store.getters.TOKEN_DATA_GET
       };
@@ -179,41 +179,41 @@ export default {
       this.axios(options)
         .then(response => {
           if (response.data.success === false) {
-            this.error = "Error response data";
-            console.log("-----error-------");
+            this.error = 'Error response data';
+            console.log('-----error-------');
 
             return false;
           }
 
-          console.log("RESPONSE: ", response.data);
+          console.log('RESPONSE: ', response.data);
           this.token = response.data.token;
         })
         .then(() => {
           this.setUser();
         })
         .catch(error => {
-          console.log("-----error-------");
+          console.log('-----error-------');
           console.log(error);
-          this.error = "Error:" + error;
+          this.error = 'Error:' + error;
         });
     },
     setUser() {
       /** */
       const formData = new FormData();
-      const phone = this.form.phone.replace(/\s+/g, "");
+      const phone = this.form.phone.replace(/\s+/g, '');
 
-      formData.append("position_id", this.form.position);
-      formData.append("name", this.form.name);
-      formData.append("email", this.form.email);
-      formData.append("phone", phone);
-      formData.append("photo", this.form.image);
-      console.log(">> formData >> ", formData);
+      formData.append('position_id', this.form.position);
+      formData.append('name', this.form.name);
+      formData.append('email', this.form.email);
+      formData.append('phone', phone);
+      formData.append('photo', this.form.image);
+      console.log('>> formData >> ', formData);
 
       const options = {
-        method: "post",
+        method: 'post',
         headers: {
           Token: this.token,
-          "Content-Type": "multipart/form-data"
+          'Content-Type': 'multipart/form-data'
         },
         data: formData,
         url: this.$store.getters.USERS_DATA_POST
@@ -222,13 +222,13 @@ export default {
       this.axios(options)
         .then(response => {
           if (response.data.success === false) {
-            this.error = "Error response data";
-            console.log("-----error-------");
+            this.error = 'Error response data';
+            console.log('-----error-------');
 
             return false;
           }
 
-          console.log("response ", response.data);
+          console.log('response ', response.data);
 
           //   this.$store.dispatch("SET_CONTENT", response.data);
           //             this.loading = false;
@@ -239,15 +239,15 @@ export default {
           //             }
         })
         .catch(error => {
-          console.log("-----error-------");
+          console.log('-----error-------');
           console.log(error);
-          this.error = "Error:" + error;
+          this.error = 'Error:' + error;
         });
     },
     formatFileNames(files) {
       if (files.length === 1) {
         this.form.image = files[0];
-        return "Selected file: " + files[0].name;
+        return 'Selected file: ' + files[0].name;
       } else {
         return `${files.length} files selected`;
       }
@@ -258,12 +258,12 @@ export default {
       this.getToken();
     },
     onReset() {
-      document.getElementById("register-form").reset();
+      document.getElementById('register-form').reset();
       const firstPosition = this.position.options[0].value;
 
-      this.form.name = "Sasasas Sasasas";
-      this.form.email = "sasasass@sadttdsas.sa";
-      this.form.phone = "112223326";
+      this.form.name = 'Sasasas Sasasas';
+      this.form.email = 'sasasass@sadttdsas.sa';
+      this.form.phone = '112223326';
       this.form.position = firstPosition;
       this.form.image = null;
     }

@@ -26,13 +26,13 @@
 
 <script>
 export default {
-  name: "Card",
-  props: ["user"],
+  name: 'Card',
+  props: ['user'],
   data() {
     return {
       tooltip: false,
       cropLength: 20,
-      cropEnd: "..."
+      cropEnd: '...'
     };
   },
   methods: {

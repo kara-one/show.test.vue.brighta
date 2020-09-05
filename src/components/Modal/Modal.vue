@@ -9,27 +9,27 @@
 
 <script>
 export default {
-    name: "Modal",
-    props: ["showModal"],
-    data() {
-        return {
-            showModalLocal: this.showModal,
-        };
+  name: 'Modal',
+  props: ['showModal'],
+  data() {
+    return {
+      showModalLocal: this.showModal,
+    };
+  },
+  methods: {
+    showModalClose() {
+      this.$emit('show-modal', false);
     },
-    methods: {
-        showModalClose() {
-            this.$emit("show-modal", false);
-        },
-    },
-    created() {
-        let that = this;
+  },
+  created() {
+    let that = this;
 
-        document.addEventListener("keyup", function(event) {
-            if (event.keyCode === 27) {
-                that.showModalClose();
-            }
-        });
-    },
+    document.addEventListener('keyup', function(event) {
+      if (event.keyCode === 27) {
+        that.showModalClose();
+      }
+    });
+  },
 };
 </script>
 
