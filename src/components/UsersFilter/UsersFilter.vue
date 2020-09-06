@@ -117,10 +117,10 @@ export default {
   },
 
   methods: {
-    allowedDates: (val) => {
-      const date = new Date().toISOString().substr(0, 10);
+    allowedDates(val) {
+      const today = this.$store.getters.DATE_FORMAT(0);
 
-      if (val <= date) {
+      if (val <= today) {
         return val;
       }
     },

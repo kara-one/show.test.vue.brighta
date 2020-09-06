@@ -2,7 +2,7 @@
   <section class="users-list">
     <v-data-table
       v-model="selected"
-      :headers="headers"
+      :headers="tableHeaders"
       :items="items"
       :search="search"
       :page.sync="page"
@@ -93,7 +93,7 @@ export default {
       page: 1,
       pageCount: 0,
       itemsPerPage: 3,
-      itemsPerPages: [1, 2, 3, 5],
+      itemsPerPages: [1, 2, 3, 5, 10],
       search: '',
       selected: [],
       editedItem: {},
@@ -124,9 +124,48 @@ export default {
       return this.$store.getters.USER_EDITED_INDEX;
     },
     items() {
-      return this.$store.getters.USERS;
+      // Prepare filter dates
+      const dates = this.$store.getters.FILTER_DATES.map((date) => {
+        // Create Data obj
+        const d = new Date(date);
+
+        // Reset time
+        d.setHours(0);
+        d.setMinutes(0);
+        d.setSeconds(0);
+        d.setMilliseconds(0);
+
+        return d;
+      });
+      console.log('dates: ', this.$store.getters.FILTER_DATES);
+      console.log('dates: ', dates);
+      // ADD date filter on USERS
+      return this.$store.getters.USERS.filter((item) => {
+        // Create Data obj
+        const registration = new Date(item.registration_timestamp);
+
+        // Reset time
+        registration.setHours(0);
+        registration.setMinutes(0);
+        registration.setSeconds(0);
+        registration.setMilliseconds(0);
+
+        // Compare
+        // IF one day date (today, yesterday, ...)
+        if (dates.length == 1 && registration.getTime() == dates[0].getTime()) {
+          return item;
+        }
+        // IF range date (week, month, ...)
+        else if (
+          dates.length == 2 &&
+          registration.getTime() >= dates[0].getTime() &&
+          registration.getTime() <= dates[1].getTime()
+        ) {
+          return item;
+        }
+      });
     },
-    headers() {
+    tableHeaders() {
       return this.$store.getters.USERS_TABLE_HEADERS;
     },
     formTitle() {
@@ -139,47 +178,71 @@ export default {
       this.editedItem = this.$store.getters.ITEM_USER;
       this.defaultItem = this.$store.getters.ITEM_USER;
     },
+
+    /** EVENT click for Edit User */
     editItem(item) {
-      this.$store.dispatch('SET_EDITED_INDEX', this.items.indexOf(item));
-      this.editedItem = Object.assign({}, item);
+      // SET FLAG open form
       this.$store.dispatch('SET_DIALOG_FORM', true);
+
+      // SET form data
+      this.editedItem = Object.assign({}, item);
+      this.$store.dispatch('SET_EDITED_INDEX', this.items.indexOf(item));
     },
+
+    /** EVENT click for Delete User */
     deleteItem(item) {
       const index = this.items.indexOf(item);
-      confirm('Are you sure you want to delete this item?') &&
+      confirm('Нажав OK вы удалите пользователя!') &&
         this.items.splice(index, 1);
     },
+
+    /** EVENT click for Close User form */
     close() {
+      // SET FLAG open form
       this.$store.dispatch('SET_DIALOG_FORM', false);
+
       this.$nextTick(() => {
+        // RESET form data
         this.editedItem = Object.assign({}, this.defaultItem);
         this.$store.dispatch('RESET_EDITED_INDEX');
       });
     },
-    save() {
-      if (this.editedIndex > -1) {
-        console.log('www1 ', this.editedItem);
 
+    /** EVENT click for Save User form */
+    save() {
+      // IF edit User
+      if (this.editedIndex > -1) {
         Object.assign(this.items[this.editedIndex], this.editedItem);
-      } else {
+      }
+      // IF add new User
+      else {
+        // Add dates from new User
         this.editedItem.last_activity_timestamp = Date.now();
         this.editedItem.registration_timestamp = Date.now();
 
+        // PUSH new User
         this.items.push(this.editedItem);
       }
+
+      // Close editor
       this.close();
     },
+
+    /** Date normalize */
     formatDate(date) {
       date = new Date(date);
 
+      // Month
       var mm = date.getMonth();
       mm = this.$store.getters.NAME_MONTHS[mm];
 
+      // Day
       var dd = date.getDate();
       if (dd < 10) {
         dd = '0' + dd;
       }
 
+      // Year
       var yy = date.getFullYear();
 
       return mm + ' ' + dd + '. ' + yy;

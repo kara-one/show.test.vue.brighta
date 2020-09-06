@@ -1,7 +1,7 @@
 const defaultUsers = () => {
   const Users = [];
 
-  for (var i = 1; i <= 5; i++) {
+  for (var i = 0; i <= 5; i++) {
     const ts = Date.now() - 86400000 * i;
 
     const item = {

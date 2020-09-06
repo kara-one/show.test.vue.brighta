@@ -9,11 +9,25 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+function dateFormat(range) {
+  let d = new Date();
+
+  d.setDate(d.getDate() - range);
+
+  let month = d.getMonth() + 1;
+  month = month < 10 ? '0' + month : month;
+
+  let day = d.getDate();
+  day = day < 10 ? '0' + day : day;
+
+  return d.getFullYear() + '-' + month + '-' + day;
+}
+
 export default new Vuex.Store({
   state: {
     dialogForm: false,
     filterForm: false,
-    filterDates: [new Date().toISOString().substr(0, 10)],
+    filterDates: [dateFormat(0)],
     userEditedIndex: -1,
     nameMonth: 'Январь,Февраль,Март,Апрель,Май,Июнь,Июль,Август,Сентябрь,Октябрь,Ноябрь,Декабрь'.split(','),
     filterPattern: {
@@ -59,22 +73,17 @@ export default new Vuex.Store({
         range = 100;
         break;
       }
-      
+
       if (range == 100) {
         filterDates = content;
       } else {
-        if (range > 0) {
-          var d = new Date();
-          d.setDate(d.getDate() - range);
-          let month = d.getMonth() + 1;
-          month = month < 10 ? '0' + month : month;
-          let day = d.getDate();
-          day = day < 10 ? '0' + day : day;
+        const dateFirst = dateFormat(range);
+        filterDates.push(dateFirst);
 
-          filterDates.push(d.getFullYear() + '-' + month + '-' + day);
+        if (range > 1) {
+          const today = dateFormat(0);
+          filterDates.push(today);
         }
-
-        filterDates.push(new Date().toISOString().substr(0, 10));
       }
 
       state.filterDates = filterDates;
@@ -97,6 +106,13 @@ export default new Vuex.Store({
     ITEM_USER: s => s.itemUser,
     FILTER_PATTERN_ITEMS: s => s.filterPattern.items,
     FILTER_PATTERN_ITEM: s => s.filterPattern.item,
+    DATE_FORMAT: s => range => {
+      if (s == '') {
+        return false;
+      }
+
+      return dateFormat(range);
+    },
   },
   actions: {
     SET_DIALOG_FORM({
