@@ -4,24 +4,30 @@
       v-model="selected"
       :headers="tableHeaders"
       :items="items"
-      :search="search"
       :page.sync="page"
       :items-per-page="itemsPerPage"
       @page-count="pageCount = $event"
       item-key="id"
-      class="elevation-1"
+      class="users-list__table"
       loading-text="Загрузка, подождите..."
       loading
       show-select
       hide-default-footer
     >
       <template v-slot:top>
-        <v-pagination v-model="page" :length="pageCount"></v-pagination>
+        <v-pagination
+          class="users-list__pagination"
+          v-model="page"
+          v-if="pagination"
+          :length="pageCount"
+        ></v-pagination>
         <v-select
+          class="users-list__perpage"
           v-model="itemsPerPage"
           :items="itemsPerPages"
-          :append-icon="'mdi-plus'"
-          label="Items per page"
+          :append-icon="'mdi-chevron-down'"
+          label="Количество на странице"
+          prefix="Отобразить"
           hide-details
           solo
         ></v-select>
@@ -41,9 +47,15 @@
         v-slot:item.last_activity_timestamp="{ item }"
       >{{ formatDate(item.last_activity_timestamp) }}</template>
 
+      <template v-slot:item.last_action="{ item }">
+        <div class="wrap-mask">{{ item.last_action }}</div>
+      </template>
+
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+        <div class="wrap-actions">
+          <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+          <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+        </div>
       </template>
     </v-data-table>
 
@@ -94,7 +106,7 @@ export default {
       pageCount: 0,
       itemsPerPage: 3,
       itemsPerPages: [1, 2, 3, 5, 10],
-      search: '',
+      pagination: false,
       selected: [],
       editedItem: {},
       defaultItem: {},
@@ -251,9 +263,193 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .users-list {
   background-color: $color_bg_white;
+  padding: 0 43px 0 32px;
   border-radius: 10px;
+  overflow: hidden;
+
+  &__pagination {
+    .v-pagination {
+      display: flex !important;
+      justify-content: flex-end !important;
+    }
+  }
+
+  &__perpage {
+    position: relative;
+
+    .v-input__control {
+      position: absolute;
+      bottom: -61px;
+      right: 0;
+      height: 61px;
+      width: 160px;
+      font-size: 13px;
+      line-height: 16px;
+    }
+
+    .v-input__slot {
+      height: 61px;
+      padding: 0 !important;
+      box-shadow: none !important;
+    }
+
+    .v-select {
+      &__slot {
+        justify-content: flex-end;
+      }
+
+      &__selections {
+        flex: none !important;
+
+        input {
+          width: 0 !important;
+        }
+      }
+    }
+
+    .v-select__selection--comma {
+      margin: 7px 8px 7px 11px;
+    }
+  }
+
+  &__table {
+    table {
+      table-layout: fixed;
+      width: 100%;
+    }
+
+    .v-data-table-header {
+      th {
+        height: 62px !important;
+        max-width: 20%;
+        padding: 0 15px 0 25px !important;
+        font-family: montserrat;
+        font-size: 13px !important;
+        line-height: 62px;
+        font-weight: 700 !important;
+        white-space: nowrap;
+        text-align: left;
+
+        &:first-child {
+          padding-left: 0 !important;
+          width: 40px !important;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3),
+        &:nth-child(4) {
+          width: 18% !important;
+        }
+
+        .v-simple-checkbox {
+          display: flex;
+          justify-content: flex-start;
+        }
+      }
+    }
+
+    tr {
+      &.v-data-table__selected {
+          background: transparent !important;
+      }
+
+      &:hover {
+        background: transparent !important;
+
+        td:nth-child(2) {
+          border-top-color: $color_grey_light !important;
+          border-left-color: $color_grey_light !important;
+          border-bottom-color: $color_grey_light !important;
+          border-radius: 5px 0 0 5px;
+        }
+
+        td:nth-child(3),
+        td:nth-child(4),
+        td:nth-child(5) {
+          border-top-color: $color_grey_light !important;
+          border-bottom-color: $color_grey_light !important;
+        }
+
+        td:nth-child(6) {
+          border-top-color: $color_grey_light !important;
+          border-right-color: $color_grey_light !important;
+          border-bottom-color: $color_grey_light !important;
+          border-radius: 0 5px 5px 0;
+        }
+      }
+    }
+
+    td {
+      position: relative;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 57px !important;
+      padding: 0 15px 0 25px !important;
+      font-family: montserrat;
+      font-size: 15px !important;
+      line-height: 20px;
+      font-weight: 400 !important;
+      white-space: nowrap;
+      text-align: left;
+      border: 2px solid $color_white !important;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
+        background: linear-gradient(to left, #fff, rgba(255, 255, 255, 0.3));
+        width: 50px;
+        height: 100%;
+      }
+
+      &:first-child {
+        padding-left: 0 !important;
+        border: none !important;
+
+        &::after {
+          background: transparent;
+          width: 0;
+          height: 0;
+        }
+      }
+
+      &:last-child {
+        padding-right: 0 !important;
+        border: none !important;
+
+        &::after {
+          background: transparent;
+        }
+      }
+
+      .v-simple-checkbox {
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      span {
+        font-size: 13px;
+        line-height: 16px;
+        font-weight: 300;
+      }
+
+      .wrap-mask {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .wrap-actions {
+        display: flex;
+        justify-content: space-between;
+        width: 85px;
+      }
+    }
+  }
 }
 </style>

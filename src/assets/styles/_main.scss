@@ -1,5 +1,7 @@
+@include font("Montserrat", "montserratlight", "300", "normal");
 @include font("Montserrat", "montserrat", "400", "normal");
 @include font("Montserrat", "montserrat_bold", "700", "normal");
+@include font("PTSans", "ptsans_regular", "400", "normal");
 @include font("PTSans", "ptsans_bold", "700", "normal");
 
 body {
@@ -20,41 +22,52 @@ body {
 /** */
 .btn {
     display: block;
+    height: 45px !important;
+    min-width: 50px;
     margin: 0 auto;
-    padding: 0 30px;
-    font-size: 14px;
-    line-height: 45px;
-    font-weight: 700;
-    color: $color_font_white;
+    padding: 0 30px !important;
+    font-size: 14px !important;
+    line-height: 41px;
+    font-weight: 700 !important;
+    color: $color_font_white !important;
     text-align: center;
+    text-transform: none !important;
+    letter-spacing: normal;
     border: none;
-    border-radius: 7px;
-    cursor: pointer;
+    border-radius: 7px !important;
+    cursor: pointer !important;
+    box-sizing: border-box;
 
     &:hover {
         color: $color_font_white;
+
+        &::before {
+            opacity: 0 !important;
+        }
     }
 
     &_red {
-        background-color: $color_first;
+        background-color: $color_first !important;
+        border: 2px solid $color_first;
 
         &:hover {
-            background-color: $color_first_hover;
+            background-color: $color_first_hover !important;
+            border: 2px solid $color_first_hover;
         }
 
         &:disabled {
-            background-color: $color_first_dis;
+            background-color: $color_first_dis !important;
         }
     }
 
     &_white {
-        background: transparent;
-        line-height: 41px;
-        color: $color_font;
-        border: 2px solid #000000;
+        background: transparent !important;
+        color: $color_black !important;
+        border: 2px solid $color_black;
 
         &:hover {
-            background: $color_font;
+            background: $color_black !important;
+            color: $color_font_white !important;
         }
     }
 }
@@ -190,4 +203,138 @@ body {
 /** */
 .collapse:not(.show) {
     display: block;
+}
+
+/** Vuetify */
+.v-overlay__scrim {
+    background-color: rgba(240, 246, 252, 0.7);
+}
+
+.v-pagination__navigation,
+.v-pagination__item,
+.v-pagination__item--active {
+    box-shadow: none !important;
+}
+
+.v-pagination__item {
+    height: 28px !important;
+    width: 28px !important;
+    min-width: 28px !important;
+    font-family: montserrat;
+    font-size: 12px !important;
+    line-height: 15px;
+    font-weight: 400;
+    color: $color_font;
+
+    &--active {
+        background-color: $color_first !important;
+        margin: 1px 0;
+        color: $color_font_white;
+        border-radius: 50% !important;
+    }
+}
+
+/** Vuetify Datepicker */
+.v-picker {
+    border-radius: 0 !important;
+
+    &__body {
+        border-radius: 0 !important;
+
+        .v-date-picker-header {
+            padding: 9px;
+
+            &__value {
+                button {
+                    padding: 0;
+                    font-family: PTSans;
+                    font-size: 16px;
+                    line-height: 24px;
+                    font-weight: 400 !important;
+                }
+            }
+        }
+
+        .v-date-picker-table {
+            background-color: #f3f8fd;
+            height: auto;
+            padding: 7px 0 12px 0;
+
+            table {
+                border-collapse: collapse;
+            }
+
+            .v-btn {
+                font-family: montserrat;
+                font-size: 12px;
+                line-height: 15px;
+                font-weight: 400;
+                color: $color_font;
+
+                &--active {
+                    background-color: $color_first !important;
+                    margin: 1px 0;
+                    color: $color_font_white;
+
+                    &::before {
+                        opacity: 0;
+                    }
+                }
+            }
+
+            &--date {
+                th {
+                    font-family: montserrat;
+                    font-size: 12px;
+                    line-height: 15px;
+                    font-weight: 700;
+                    color: $color_font;
+                }
+            }
+        }
+    }
+}
+
+/** MDI */
+.mdi-chevron-right::before {
+    content: '';
+    background-image: url("~@/assets/img/icons.svg#arrow_right");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    width: 24px;
+    height: 24px;
+}
+.mdi-chevron-left::before {
+    content: '';
+    background-image: url("~@/assets/img/icons.svg#arrow_left");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    width: 24px;
+    height: 24px;
+}
+.mdi-pencil::before {
+    content: '';
+    background-image: url("~@/assets/img/icons.svg#edit");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    width: 24px;
+    height: 24px;
+}
+.mdi-delete::before {
+    content: '';
+    background-image: url("~@/assets/img/icons.svg#trash");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    width: 24px;
+    height: 24px;
+}
+.mdi-checkbox-blank-outline::before {
+    content: "\F0130";
+}
+.mdi-checkbox-marked::before {
+    content: "\F0134";
 }

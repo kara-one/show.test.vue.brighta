@@ -8,7 +8,7 @@ const defaultUsers = () => {
       id: i,
       name: 'user ' + i,
       email: `User${i}@email.com`,
-      product: 'Как наладить отнош',
+      product: 'Как наладить отношения в семье',
       last_action: 'view_landing_course1',
       flag_lock: 0,
       last_activity_timestamp: ts,

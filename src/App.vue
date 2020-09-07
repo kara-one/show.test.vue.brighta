@@ -54,6 +54,7 @@ export default {
   &__main {
     grid-area: main;
     margin-top: 60px;
+    overflow-x: auto;
   }
 }
 </style>
