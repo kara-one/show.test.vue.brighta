@@ -59,8 +59,12 @@
       </template>
     </v-data-table>
 
-    <v-toolbar flat color="white">
-      <v-dialog v-model="dialog" max-width="500px">
+      <v-dialog
+        v-model="dialog"
+        overlay-color="rgba(240, 246, 252, 0.7)"
+        overlay-opacity="1"
+        max-width="60%"
+      >
         <v-card>
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
@@ -86,13 +90,11 @@
           </v-card-text>
 
           <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+            <v-btn class="btn btn_white" text @click="close">Отмена</v-btn>
+            <v-btn class="btn btn_red" text @click="save">Сохранить</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
-    </v-toolbar>
   </section>
 </template>
 
@@ -181,7 +183,7 @@ export default {
       return this.$store.getters.USERS_TABLE_HEADERS;
     },
     formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
+      return this.editedIndex === -1 ? 'Новый контакт' : 'Редактировать контакт';
     },
   },
 
@@ -353,7 +355,7 @@ export default {
 
     tr {
       &.v-data-table__selected {
-          background: transparent !important;
+        background: transparent !important;
       }
 
       &:hover {

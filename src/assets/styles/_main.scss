@@ -210,6 +210,30 @@ body {
     background-color: rgba(240, 246, 252, 0.7);
 }
 
+.v-dialog {
+    overflow: hidden;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+
+    .v-label {
+        font-family: Montserrat;
+    }
+
+    .v-card {
+
+        &__actions {
+            justify-content: flex-end !important;
+        }
+    }
+
+    .v-btn {
+        flex: none;
+        margin: 0 5px;
+    }
+}
+
+
+
 .v-pagination__navigation,
 .v-pagination__item,
 .v-pagination__item--active {
@@ -305,6 +329,7 @@ body {
     width: 24px;
     height: 24px;
 }
+
 .mdi-chevron-left::before {
     content: '';
     background-image: url("~@/assets/img/icons.svg#arrow_left");
@@ -314,6 +339,7 @@ body {
     width: 24px;
     height: 24px;
 }
+
 .mdi-pencil::before {
     content: '';
     background-image: url("~@/assets/img/icons.svg#edit");
@@ -323,6 +349,7 @@ body {
     width: 24px;
     height: 24px;
 }
+
 .mdi-delete::before {
     content: '';
     background-image: url("~@/assets/img/icons.svg#trash");
@@ -332,9 +359,11 @@ body {
     width: 24px;
     height: 24px;
 }
+
 .mdi-checkbox-blank-outline::before {
     content: "\F0130";
 }
+
 .mdi-checkbox-marked::before {
     content: "\F0134";
 }

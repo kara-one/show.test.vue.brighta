@@ -241,10 +241,10 @@ export default {
   }
 
   &__dialog {
-      width: 560px;
-      padding: 0 20px;
-      margin: 0;
-      box-shadow: none;
+    width: 580px;
+    padding: 0 20px;
+    margin: 0;
+    box-shadow: none;
   }
 }
 
@@ -308,7 +308,7 @@ export default {
 }
 
 .filter-dialog-picker {
-  max-width: 288px;
+  max-width: 308px;
   box-sizing: content-box;
   padding-left: 4px;
   padding-bottom: 20px;
@@ -320,12 +320,12 @@ export default {
   }
 
   &__text {
-    padding: 2px 0 0 0;    
+    padding: 2px 0 0 0;
   }
 
   &__actions {
-      justify-content: space-between;
-      padding: 10px;
+    justify-content: space-between;
+    padding: 10px;
   }
 }
 </style>
