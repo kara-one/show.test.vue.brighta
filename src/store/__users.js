@@ -1,7 +1,8 @@
-const defaultUsers = () => {
+/** Generation facke users */
+const usersGenerated = () => {
   const Users = [];
 
-  for (var i = 0; i <= 5; i++) {
+  for (var i = 0; i <= 50; i++) {
     const ts = Date.now() - 86400000 * i;
 
     const item = {
@@ -21,6 +22,7 @@ const defaultUsers = () => {
   return Users;
 };
 
+/** Abstract class user profile */
 const itemUser = () => {
   return {
     name: '',
@@ -31,6 +33,7 @@ const itemUser = () => {
   };
 };
 
+/** Config vuetify table header titles */
 const usersTableHeaders = () => {
   return [{
     text: 'Пользователь',
@@ -75,7 +78,7 @@ const usersTableHeaders = () => {
 };
 
 export {
-  defaultUsers,
+  usersGenerated,
   itemUser,
   usersTableHeaders
 };

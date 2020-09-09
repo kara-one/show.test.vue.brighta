@@ -1,46 +1,29 @@
 import {
-  defaultUsers,
+  dateFormat,
+  datesArray,
+  nameMonth,
+  patterns
+} from './__date';
+import {
   itemUser,
+  usersGenerated,
   usersTableHeaders
-} from './default.users.js';
+} from './__users';
 
 import Vue from 'vue';
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
-
-function dateFormat(range) {
-  let d = new Date();
-
-  d.setDate(d.getDate() - range);
-
-  let month = d.getMonth() + 1;
-  month = month < 10 ? '0' + month : month;
-
-  let day = d.getDate();
-  day = day < 10 ? '0' + day : day;
-
-  return d.getFullYear() + '-' + month + '-' + day;
-}
-
+console.log('patterns: ', patterns);
 export default new Vuex.Store({
   state: {
     dialogForm: false,
-    filterForm: false,
-    filterDates: [dateFormat(0)],
+    filterDates: datesArray(patterns.default, []),
+    selectedDates: datesArray(patterns.default, []),
     userEditedIndex: -1,
-    nameMonth: 'Январь,Февраль,Март,Апрель,Май,Июнь,Июль,Август,Сентябрь,Октябрь,Ноябрь,Декабрь'.split(','),
-    filterPattern: {
-      item: 'today',
-      items: {
-        today: 'Сегодня',
-        yesterday: 'Вчера',
-        week: 'Последние 7 дней',
-        month: 'Последние 30 дней',
-        custom: 'Выбранный период',
-      }
-    },
-    users: defaultUsers(),
+    nameMonth: nameMonth(),
+    filterPattern: patterns,
+    users: usersGenerated(),
     usersTableHeaders: usersTableHeaders(),
     itemUser: itemUser(),
   },
@@ -48,45 +31,25 @@ export default new Vuex.Store({
     SET_DIALOG_FORM(state, content) {
       state.dialogForm = content;
     },
-    SET_FILTER_FORM(state, content) {
-      state.filterForm = content;
-    },
     SET_FILTER_PATTERN_ITEM(state, content) {
       state.filterPattern.item = content;
     },
+    RESET_FILTER_PATTERN_ITEM(state) {
+      state.filterPattern.item = state.filterPattern.selected;
+    },
+    SET_FILTER_PATTERN_SELECTED(state) {
+      state.filterPattern.selected = state.filterPattern.item;
+    },
     SET_FILTER_DATES(state, content) {
-      let filterDates = [];
-      let range = 0;
       const item = state.filterPattern.item;
 
-      switch (item) {
-      case 'yesterday':
-        range = 1;
-        break;
-      case 'week':
-        range = 7;
-        break;
-      case 'month':
-        range = 30;
-        break;
-      case 'custom':
-        range = 100;
-        break;
-      }
-
-      if (range == 100) {
-        filterDates = content;
-      } else {
-        const dateFirst = dateFormat(range);
-        filterDates.push(dateFirst);
-
-        if (range > 1) {
-          const today = dateFormat(0);
-          filterDates.push(today);
-        }
-      }
-
-      state.filterDates = filterDates;
+      state.filterDates = datesArray(item, content);
+    },
+    RESET_FILTER_DATES(state) {
+      state.filterDates = state.selectedDates;
+    },
+    SET_SELECTED_DATES(state) {
+      state.selectedDates = state.filterDates;
     },
     SET_EDITED_INDEX(state, content) {
       state.userEditedIndex = content;
@@ -97,8 +60,8 @@ export default new Vuex.Store({
   },
   getters: {
     DIALOG_FORM: s => s.dialogForm,
-    FILTER_FORM: s => s.filterForm,
     FILTER_DATES: s => s.filterDates,
+    SELECTED_DATES: s => s.selectedDates,
     USER_EDITED_INDEX: s => s.userEditedIndex,
     NAME_MONTHS: s => s.nameMonth,
     USERS: s => s.users,
@@ -106,8 +69,9 @@ export default new Vuex.Store({
     ITEM_USER: s => s.itemUser,
     FILTER_PATTERN_ITEMS: s => s.filterPattern.items,
     FILTER_PATTERN_ITEM: s => s.filterPattern.item,
+    FILTER_PATTERN_SELECTED: s => s.filterPattern.selected,
     DATE_FORMAT: s => range => {
-      if (s == '') {
+      if (s === '') {
         return false;
       }
 
@@ -120,20 +84,35 @@ export default new Vuex.Store({
     }, content) {
       commit('SET_DIALOG_FORM', content);
     },
-    SET_FILTER_FORM({
-      commit
-    }, content) {
-      commit('SET_FILTER_FORM', content);
-    },
     SET_FILTER_PATTERN_ITEM({
       commit
     }, content) {
       commit('SET_FILTER_PATTERN_ITEM', content);
     },
+    RESET_FILTER_PATTERN_ITEM({
+      commit
+    }, content) {
+      commit('RESET_FILTER_PATTERN_ITEM', content);
+    },
+    SET_FILTER_PATTERN_SELECTED({
+      commit
+    }, content) {
+      commit('SET_FILTER_PATTERN_SELECTED', content);
+    },
     SET_FILTER_DATES({
       commit
     }, content) {
       commit('SET_FILTER_DATES', content);
+    },
+    RESET_FILTER_DATES({
+      commit
+    }, content) {
+      commit('RESET_FILTER_DATES', content);
+    },
+    SET_SELECTED_DATES({
+      commit
+    }, content) {
+      commit('SET_SELECTED_DATES', content);
     },
     SET_EDITED_INDEX({
       commit

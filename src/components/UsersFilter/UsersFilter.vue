@@ -1,8 +1,24 @@
 <template>
   <section class="users-filter">
     <div class="users-filter__area-left">
-      <button class="users-filter__btn-pattern" @click="openFilter">{{filterPatternSelected}}</button>
-      <button class="users-filter__btn-date" @click="openFilter">Фильтр</button>
+      <button class="users-filter__btn-pattern" @click="openFilter">
+        <svg class="left">
+          <use xlink:href="~@/assets/img/icons.svg#filter_presets" />
+        </svg>
+        {{filterPatternSelected}}
+        <svg class="arrow">
+          <use xlink:href="~@/assets/img/icons.svg#arrow_dwn" />
+        </svg>
+      </button>
+      <button class="users-filter__btn-date" @click="openFilter">
+        <svg class="left">
+          <use xlink:href="~@/assets/img/icons.svg#filter" />
+        </svg>
+        Фильтр
+        <svg class="arrow">
+          <use xlink:href="~@/assets/img/icons.svg#arrow_dwn" />
+        </svg>
+      </button>
     </div>
 
     <div class="users-filter__area-right">
@@ -57,7 +73,12 @@
 
                 <v-card-actions class="filter-dialog-picker__actions">
                   <v-btn class="btn btn_white" text @click="closeFilter">Отмена</v-btn>
-                  <v-btn class="btn btn_red" text @click="saveFilter">Обновить</v-btn>
+                  <v-btn
+                    class="btn btn_red"
+                    text
+                    @click="saveFilter"
+                    :disabled="buttonSaveDisable"
+                  >Обновить</v-btn>
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -72,6 +93,12 @@
 export default {
   name: 'UsersFilter',
 
+  data() {
+    return {
+      filterState: false,
+    };
+  },
+
   watch: {
     filter(val) {
       val || this.closeFilter();
@@ -81,15 +108,15 @@ export default {
   computed: {
     filter: {
       get() {
-        return this.$store.getters.FILTER_FORM;
+        return this.filterState;
       },
       set(val) {
-        this.$store.dispatch('SET_FILTER_FORM', val);
+        this.filterState = val;
       },
     },
     filterPatternSelected() {
       const items = this.$store.getters.FILTER_PATTERN_ITEMS;
-      const item = this.$store.getters.FILTER_PATTERN_ITEM;
+      const item = this.$store.getters.FILTER_PATTERN_SELECTED;
 
       return items[item];
     },
@@ -110,9 +137,15 @@ export default {
         return this.$store.getters.FILTER_DATES;
       },
       set(val) {
-        this.filterPatternItem = 'custom';
+        this.$store.dispatch('SET_FILTER_PATTERN_ITEM', 'custom');
         this.$store.dispatch('SET_FILTER_DATES', val);
       },
+    },
+    buttonSaveDisable() {
+      const fd = new Date(this.$store.getters.FILTER_DATES[0]).getTime();
+      const sd = new Date(this.$store.getters.SELECTED_DATES[0]).getTime();
+      
+      return fd === sd ? true : false;
     },
   },
 
@@ -129,13 +162,17 @@ export default {
       this.$store.dispatch('RESET_EDITED_INDEX');
     },
     openFilter() {
-      this.$store.dispatch('SET_FILTER_FORM', true);
+      this.filterState = true;
     },
     saveFilter() {
-      this.$store.dispatch('SET_FILTER_FORM', false);
+      this.$store.dispatch('SET_SELECTED_DATES');
+      this.$store.dispatch('SET_FILTER_PATTERN_SELECTED');
+      this.filterState = false;
     },
     closeFilter() {
-      this.$store.dispatch('SET_FILTER_FORM', false);
+      this.$store.dispatch('RESET_FILTER_DATES');
+      this.$store.dispatch('RESET_FILTER_PATTERN_ITEM');
+      this.filterState = false;
     },
   },
 };
@@ -162,28 +199,28 @@ export default {
     border: none;
     cursor: pointer;
 
-    &::before {
-      content: "";
+    &:hover {
+      color: $color_font_red;
+
+      svg {
+        fill: $color_font_red;
+      }
+    }
+
+    svg.left {
       position: absolute;
       top: 0;
       left: 0;
       z-index: 10;
-      background: transparent url("~@/assets/img/icons.svg#filter_presets")
-        center no-repeat;
-      background-size: 22px 24px;
       width: 22px;
       height: 100%;
     }
 
-    &::after {
-      content: "";
+    svg.arrow {
       position: absolute;
       top: 50%;
       right: 0;
-      background-image: url("~@/assets/img/icons.svg#arrow_dwn");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: contain;
+      z-index: 10;
       width: 11px;
       height: 6px;
       transform: translateY(-50%);
@@ -202,28 +239,28 @@ export default {
     border: none;
     cursor: pointer;
 
-    &::before {
-      content: "";
+    &:hover {
+      color: $color_font_red;
+
+      svg {
+        fill: $color_font_red;
+      }
+    }
+
+    svg.left {
       position: absolute;
       top: 0;
       left: 0;
       z-index: 10;
-      background: transparent url("~@/assets/img/icons.svg#filter") center
-        no-repeat;
-      background-size: 23px 20px;
       width: 23px;
       height: 100%;
     }
 
-    &::after {
-      content: "";
+    svg.arrow {
       position: absolute;
       top: 50%;
       right: 0;
-      background-image: url("~@/assets/img/icons.svg#arrow_dwn");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: contain;
+      z-index: 10;
       width: 11px;
       height: 6px;
       transform: translateY(-50%);
