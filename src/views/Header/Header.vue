@@ -31,13 +31,15 @@ export default {
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   &__logo {
     background: transparent url("~@/assets/img/logo.svg") center no-repeat;
-    background-size: 84px 15px;
+    background-size: 86px 16px;
     display: block;
-    width: 84px;
-    height: 15px;
+    width: 86px;
+    height: 16px;
+    margin-top: 2px;
     color: $color_font;
 
     &_beta {
@@ -45,7 +47,7 @@ export default {
       &::after {
         content: "Beta";
         position: absolute;
-        right: -30px;
+        right: -35px;
         bottom: -2px;
         z-index: 1;
         font-size: 13px;

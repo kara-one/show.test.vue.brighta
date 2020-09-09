@@ -148,8 +148,8 @@ export default {
 
       a {
         display: block;
-        height: 85px;
-        padding-top: 55px;
+        height: 83px;
+        padding-top: 53px;
         font-family: PTSans;
         font-size: 15px;
         line-height: 19px;
@@ -159,12 +159,12 @@ export default {
 
       svg {
         position: absolute;
-        top: 35%;
+        top: 30%;
         left: 50%;
         width: 25px;
         height: 25px;
         fill: $color_font;
-        transform: translate(-50%, -35%);
+        transform: translate(-50%, -30%);
       }
 
       &_active {

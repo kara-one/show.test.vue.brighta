@@ -1,7 +1,6 @@
 <template>
   <section class="users-list">
     <v-data-table
-      v-model="selected"
       :headers="tableHeaders"
       :items="items"
       :page.sync="page"
@@ -59,42 +58,42 @@
       </template>
     </v-data-table>
 
-      <v-dialog
-        v-model="dialog"
-        overlay-color="rgba(240, 246, 252, 0.7)"
-        overlay-opacity="1"
-        max-width="60%"
-      >
-        <v-card>
-          <v-card-title>
-            <span class="headline">{{ formTitle }}</span>
-          </v-card-title>
+    <v-dialog
+      v-model="dialog"
+      overlay-color="rgba(240, 246, 252, 0.7)"
+      overlay-opacity="1"
+      max-width="60%"
+    >
+      <v-card>
+        <v-card-title>
+          <span class="headline">{{ formTitle }}</span>
+        </v-card-title>
 
-          <v-card-text>
-            <v-container>
-              <v-row>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.name" label="Пользователь"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.email" label="Email"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.product" label="Продукт"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.last_action" label="Последнее действие"></v-text-field>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card-text>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field v-model="editedItem.name" label="Пользователь"></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field v-model="editedItem.email" label="Email"></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field v-model="editedItem.product" label="Продукт"></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field v-model="editedItem.last_action" label="Последнее действие"></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
 
-          <v-card-actions>
-            <v-btn class="btn btn_white" text @click="close">Отмена</v-btn>
-            <v-btn class="btn btn_red" text @click="save">Сохранить</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+        <v-card-actions>
+          <v-btn class="btn btn_white" text @click="close">Отмена</v-btn>
+          <v-btn class="btn btn_red" text @click="save">Сохранить</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 
@@ -106,10 +105,9 @@ export default {
     return {
       page: 1,
       pageCount: 0,
-      itemsPerPage: 3,
+      itemsPerPage: 10,
       itemsPerPages: [1, 2, 3, 5, 10],
       pagination: false,
-      selected: [],
       editedItem: {},
       defaultItem: {},
     };
@@ -139,7 +137,7 @@ export default {
     },
     items() {
       // Prepare filter dates
-      const dates = this.$store.getters.FILTER_DATES.map((date) => {
+      const dates = this.$store.getters.SELECTED_DATES.map((date) => {
         // Create Data obj
         const d = new Date(date);
 
@@ -151,8 +149,7 @@ export default {
 
         return d;
       });
-      console.log('dates: ', this.$store.getters.FILTER_DATES);
-      console.log('dates: ', dates);
+
       // ADD date filter on USERS
       return this.$store.getters.USERS.filter((item) => {
         // Create Data obj
@@ -172,7 +169,7 @@ export default {
         // IF range date (week, month, ...)
         else if (
           dates.length == 2 &&
-          registration.getTime() >= dates[0].getTime() &&
+          registration.getTime() > dates[0].getTime() &&
           registration.getTime() <= dates[1].getTime()
         ) {
           return item;
@@ -183,7 +180,9 @@ export default {
       return this.$store.getters.USERS_TABLE_HEADERS;
     },
     formTitle() {
-      return this.editedIndex === -1 ? 'Новый контакт' : 'Редактировать контакт';
+      return this.editedIndex === -1
+        ? 'Новый контакт'
+        : 'Редактировать контакт';
     },
   },
 
@@ -324,26 +323,44 @@ export default {
     }
 
     .v-data-table-header {
+      tr {
+        height: 75px;
+        vertical-align: top;
+      }
+
       th {
         height: 62px !important;
+        max-height: 62px;
         max-width: 20%;
         padding: 0 15px 0 25px !important;
-        font-family: montserrat;
         font-size: 13px !important;
         line-height: 62px;
         font-weight: 700 !important;
+        color: $color_font !important;
         white-space: nowrap;
         text-align: left;
 
         &:first-child {
+          padding-top: 18px !important;
           padding-left: 0 !important;
           width: 40px !important;
         }
 
-        &:nth-child(2),
-        &:nth-child(3),
+        &:nth-child(2) {
+          width: 17% !important;
+        }
+        &:nth-child(3) {
+          width: 16% !important;
+        }
         &:nth-child(4) {
-          width: 18% !important;
+          width: 16% !important;
+        }
+        &:nth-child(5) {
+          width: 17% !important;
+        }
+
+        &:last-child {
+          width: 107px !important;
         }
 
         .v-simple-checkbox {
@@ -390,7 +407,6 @@ export default {
       text-overflow: ellipsis;
       height: 57px !important;
       padding: 0 15px 0 25px !important;
-      font-family: montserrat;
       font-size: 15px !important;
       line-height: 20px;
       font-weight: 400 !important;
@@ -398,7 +414,8 @@ export default {
       text-align: left;
       border: 2px solid $color_white !important;
 
-      &::after {
+      &:nth-child(5):after,
+      &:nth-child(6):after {
         content: "";
         position: absolute;
         top: 0;
@@ -449,7 +466,6 @@ export default {
       .wrap-actions {
         display: flex;
         justify-content: space-between;
-        width: 85px;
       }
     }
   }

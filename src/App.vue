@@ -47,13 +47,13 @@ export default {
 
   &__aside {
     grid-area: aside;
-    margin-top: 60px;
+    margin-top: 58px;
     margin-bottom: 67px;
   }
 
   &__main {
     grid-area: main;
-    margin-top: 60px;
+    margin-top: 58px;
     overflow-x: auto;
   }
 }
