@@ -28,6 +28,8 @@ export default {
 <style lang="scss">
 @import "~@/scss/_reset.scss";
 @import "~@/scss/_main.scss";
+@import "~@/scss/_btn.scss";
+@import "~@/scss/_vuetify.scss";
 
 .content {
   display: grid;

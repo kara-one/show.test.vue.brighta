@@ -1,0 +1,127 @@
+/** */
+.btn {
+    display: block;
+    height: 45px !important;
+    min-width: 50px;
+    margin: 0 auto;
+    padding: 0 30px !important;
+    font-size: 14px !important;
+    line-height: 41px;
+    font-weight: 700 !important;
+    color: $color_font_white !important;
+    text-align: center;
+    text-transform: none !important;
+    letter-spacing: normal;
+    border: none;
+    border-radius: 7px !important;
+    cursor: pointer !important;
+    box-sizing: border-box;
+
+    &:hover {
+        color: $color_font_white;
+
+        &::before {
+            opacity: 0 !important;
+        }
+    }
+
+    &_red {
+        background-color: $color_first !important;
+        border: 2px solid $color_first;
+
+        &:hover {
+            background-color: $color_first_hover !important;
+            border: 2px solid $color_first_hover;
+        }
+
+        &.v-btn.theme--light.v-btn--disabled,
+        &:disabled {
+            background-color: $color_first_dis !important;
+            border: 2px solid $color_first_dis;
+            color: $color_font_white !important;
+        }
+    }
+
+    &_white {
+        background: transparent !important;
+        color: $color_black !important;
+        border: 2px solid $color_black;
+
+        &:hover {
+            background: $color_black !important;
+            color: $color_font_white !important;
+        }
+    }
+}
+
+.icon {
+    position: relative;
+    background-color: $color_bg_white;
+    display: block;
+    width: 43px;
+    height: 43px;
+    border: 0;
+    border-radius: 22px;
+    cursor: pointer;
+
+    &__grey {
+        background-color: $color_bg_grey;
+    }
+
+    &__shadow {
+        box-shadow: 0px 10px 40px rgba(213, 221, 230, 0.6);
+    }
+
+    &__bell {
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background-image: url("~@/assets/img/icons.svg#bell");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 20px;
+            height: 20px;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    &__search {
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background-image: url("~@/assets/img/icons.svg#search");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 19px;
+            height: 19px;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    &__arrow {
+        padding: 0 44px 0 26px;
+        width: auto;
+        font-weight: 700;
+        line-height: 43px;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 18px;
+            background-image: url("~@/assets/img/icons.svg#arrow_dwn");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 11px;
+            height: 6px;
+            transform: translateY(-50%);
+        }
+    }
+}
