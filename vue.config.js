@@ -8,8 +8,8 @@ module.exports = {
         .loader('sass-resources-loader')
         .options({
           resources: [
-            path.resolve(__dirname, 'src/assets/styles/_vars.scss'),
-            path.resolve(__dirname, 'src/assets/styles/_mixins.scss')
+            path.resolve(__dirname, 'src/scss/_vars.scss'),
+            path.resolve(__dirname, 'src/scss/_mixins.scss')
           ]
         })
         .end();

@@ -26,8 +26,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/assets/styles/_reset.scss";
-@import "~@/assets/styles/_main.scss";
+@import "~@/scss/_reset.scss";
+@import "~@/scss/_main.scss";
 
 .content {
   display: grid;
