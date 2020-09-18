@@ -43,7 +43,7 @@ const dateFormat = (range) => {
 /** Return dates array from pattern period */
 const datesArray = (item, content) => {
   if (item === 'custom') {
-    return content;
+    return content.sort();
   }
 
   const filterDates = [];
