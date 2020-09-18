@@ -14,7 +14,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
-console.log('patterns: ', patterns);
+
 export default new Vuex.Store({
   state: {
     dialogForm: false,
