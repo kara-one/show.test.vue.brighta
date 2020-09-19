@@ -169,7 +169,7 @@ export default {
         // IF range date (week, month, ...)
         else if (
           dates.length == 2 &&
-          registration.getTime() > dates[0].getTime() &&
+          registration.getTime() >= dates[0].getTime() &&
           registration.getTime() <= dates[1].getTime()
         ) {
           return item;

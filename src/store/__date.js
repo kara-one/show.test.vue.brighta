@@ -14,8 +14,8 @@ const patterns = {
   range: {
     today: 0,
     yesterday: 1,
-    week: 7,
-    month: 30,
+    week: 6,
+    month: 29,
     custom: 100,
   },
 };

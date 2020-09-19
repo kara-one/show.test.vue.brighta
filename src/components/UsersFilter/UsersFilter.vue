@@ -147,13 +147,14 @@ export default {
       
       return fd === sd ? true : false;
     },
+    dateToday() {
+      return this.$store.getters.DATE_FORMAT(0);
+    },
   },
 
   methods: {
     allowedDates(val) {
-      const today = this.$store.getters.DATE_FORMAT(0);
-
-      if (val <= today) {
+      if (val <= this.dateToday) {
         return val;
       }
     },
