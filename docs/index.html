@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Description of the task</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            min-width: 320px;
+            max-width: 1170px;
+            margin: 0 auto;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: flex-end;
+            height: 40px;
+        }
+
+        .nav ul {
+            display: flex;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .nav ul a {
+            display: block;
+            padding: 0 15px;
+            line-height: 40px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .nav ul li.selected a {
+            background: #888;
+            border-radius: 3px;
+            color: #fff;
+        }
+
+        blockquote {
+            background: #fafafa;
+            margin: 0;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+
+        .footer {
+            height: 50px;
+            border-top: 1px solid #ccc;
+            line-height: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="header__nav nav">
+                <ul>
+                    <li class="selected"><a href="index.html">EN</a></li>
+                    <li><a href="ru.html">RU</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Description of the task</h1>
+
+            <p>The project was created according to a test task</p>
+            <blockquote>
+                <p>Layout the page shown in the Frame 75 design:
+                    <a
+                        href="https://www.figma.com/file/Co1Bss547xxK5FIHkUc9p5/%D0%A2%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D0%BE%D0%B5-%D0%B7%D0%B0%D0%B4?node-id=0%3A1">link
+                        to layout in Figma</a> <a href="">link to PDF</a>
+                    (menu item shown only).</p>
+                <p>!!!!!!!The work must be done exactly as on the
+                    TK layout!!! using vue.js!!!!</p>
+
+                <p>It is necessary to implement a filter calendar whose work
+                    shown in additional views. Explanations:
+                    the default view is "Today".</p>
+
+                <p>The user can choose:</p>
+                <ul>
+                    <li>
+                        <p>proposed ready-made options (Yesterday, Last 7
+                            days, Last 30 days, etc.). If
+                            the option “7 days” is selected, then the period in the last 7 days is automatically painted
+                            over on the calendar (similarly for other options). After selecting the period, the Update
+                            button is activated.
+                        </p>
+                    </li>
+                    <li>
+                        <p>Select your own period immediately on the calendar (from and to), after which the Update
+                            button is activated.</p>
+                    </li>
+                </ul>
+
+                <p>After clicking Refresh, the selected period appears additionally above the table, view Frame 90.</p>
+
+                <p>When coding, take into account the transfer of the necessary data to the back-end. Adaptive for
+                    mobile, tablet - no need.</p>
+            </blockquote>
+
+            <p>Upon closer examination of the layout, many questions arose:</p>
+            <blockquote>
+                <ul>
+                    <li>
+                        <p>on the frame 83 layout - the logic of interaction between presets (ready-made options) and
+                            the calendar is not fully understood, for example:</p>
+                        <ul>
+                            <li>
+                                <p>if the period on the calendar is from January 25 to February 15, which preset should
+                                    this correspond to?</p>
+                            </li>
+                            <li>
+                                <p>when choosing presets "this month" and "last month" what should be displayed on the
+                                    calendar?</p>
+                            </li>
+                            <li>
+                                <p>the list of users is selected by date, is it "registration date" or "last activity"?
+                                </p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>by frame 75 layout:</p>
+                        <ul>
+                            <li>
+                                <p>non-standard checkboxes are used in the table, but they are not rendered on frame 91,
+                                    the meaning of the checkboxes is also not clear, I don’t see the action-button
+                                    layouts for them?</p>
+                            </li>
+                            <li>
+                                <p>I see several states in the table rows, but they are not described on frame 91</p>
+                            </li>
+                            <li>
+                                <p>there is a choice of the number of users on the page, but I can't see pagination?</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><i>When coding, take into account the transfer of the necessary data to the back-end</i> -
+                            which "necessary
+                            data" exactly?</p>
+                    </li>
+                    <li>
+                        <p><i>After clicking Refresh, the selected period appears additionally above the table, the view
+                                Frame 90</i> -
+                            is not the best solution to use chips here, this element is not suitable here, just like the
+                            implementation of the entire filter</p>
+                    </li>
+                    <li>
+                        <p>Fonts must be included</p>
+                    </li>
+                    <li>
+                        <p>Why don't you give fake rest api?</p>
+                    </li>
+                </ul>
+            </blockquote>
+
+            <p>Therefore, it was decided to collect our own version of the interface, and the version corresponding to
+                the task can be found in the <b>task-view</b> branch
+            </p>
+        </div>
+    </main>
+    <footer class="footer">#2020</footer>
+</body>
+
+</html>
