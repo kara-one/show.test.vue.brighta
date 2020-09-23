@@ -1,4 +1,6 @@
-# abz.agency.vue
+# The project was created according to a test task
+[Description of the task](https://ksawl.github.io/show.test.vue.brighta/)
+[View page](https://show-test-vue-brighta.herokuapp.com/)
 
 ## Project setup
 ```
