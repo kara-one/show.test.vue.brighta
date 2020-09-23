@@ -64,15 +64,15 @@
           :show-current="true"
           :allowed-dates="allowedDates"
         >
-          <v-btn class="btn btn_white" text @click="closeFilter">Отмена</v-btn>
-          <v-btn class="btn btn_red" text @click="saveFilter" :disabled="buttonSaveDisable">Обновить</v-btn>
+          <v-btn class="btn btn__white" text @click="closeFilter">Отмена</v-btn>
+          <v-btn class="btn btn__red" text @click="saveFilter" :disabled="buttonSaveDisable">Обновить</v-btn>
         </v-date-picker>
       </v-dialog>
     </div>
 
     <div class="users-filter__area-right">
-      <button class="btn btn_white">Выгрузить</button>
-      <button class="btn btn_red" @click="addItem">Добавить контакты</button>
+      <button class="btn btn__white">Выгрузить</button>
+      <button class="btn btn__red" @click="addItem">Добавить контакты</button>
     </div>
   </section>
 </template>

@@ -25,7 +25,7 @@
         }
     }
 
-    &_red {
+    &__red {
         background-color: $color_first !important;
         border: 2px solid $color_first;
 
@@ -42,7 +42,7 @@
         }
     }
 
-    &_white {
+    &__white {
         background: transparent !important;
         color: $color_black !important;
         border: 2px solid $color_black;

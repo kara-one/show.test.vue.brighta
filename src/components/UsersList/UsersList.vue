@@ -32,25 +32,25 @@
         ></v-select>
       </template>
 
-      <template v-slot:item.name="{ item }">
+      <template v-slot:[`item.name`]="{ item }">
         {{ item.name }}
         <br />
         <span>{{ item.email }}</span>
       </template>
 
       <template
-        v-slot:item.registration_timestamp="{ item }"
+        v-slot:[`item.registration_timestamp`]="{ item }"
       >{{ formatDate(item.registration_timestamp) }}</template>
 
       <template
-        v-slot:item.last_activity_timestamp="{ item }"
+        v-slot:[`item.last_activity_timestamp`]="{ item }"
       >{{ formatDate(item.last_activity_timestamp) }}</template>
 
-      <template v-slot:item.last_action="{ item }">
+      <template v-slot:[`item.last_action`]="{ item }">
         <div class="wrap-mask">{{ item.last_action }}</div>
       </template>
 
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:[`item.actions`]="{ item }">
         <div class="wrap-actions">
           <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
           <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
@@ -89,8 +89,8 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn class="btn btn_white" text @click="close">Отмена</v-btn>
-          <v-btn class="btn btn_red" text @click="save">Сохранить</v-btn>
+          <v-btn class="btn btn__white" text @click="close">Отмена</v-btn>
+          <v-btn class="btn btn__red" text @click="save">Сохранить</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
