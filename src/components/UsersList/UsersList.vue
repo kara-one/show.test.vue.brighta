@@ -105,8 +105,8 @@ export default {
     return {
       page: 1,
       pageCount: 0,
-      itemsPerPage: 10,
-      itemsPerPages: [1, 2, 3, 5, 10],
+      itemsPerPage: 15,
+      itemsPerPages: [5, 15, 25, 50, 100],
       pagination: false,
       editedItem: {},
       defaultItem: {},
@@ -117,6 +117,9 @@ export default {
     dialog(val) {
       val || this.close();
     },
+    pageCount(val) {
+      this.pagination = val > 1;
+    }
   },
 
   created() {
