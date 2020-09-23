@@ -1,16 +1,7 @@
 <template>
   <section class="users-filter">
     <div class="users-filter__area-left">
-      <button class="users-filter__btn-pattern" @click="openFilter">
-        <svg class="left">
-          <use xlink:href="~@/assets/img/icons.svg#filter_presets" />
-        </svg>
-        {{filterPatternSelected}}
-        <svg class="arrow">
-          <use xlink:href="~@/assets/img/icons.svg#arrow_dwn" />
-        </svg>
-      </button>
-      <button class="users-filter__btn-date" @click="openFilter">
+      <button class="users-filter__btn-date">
         <svg class="left">
           <use xlink:href="~@/assets/img/icons.svg#filter" />
         </svg>
@@ -19,72 +10,69 @@
           <use xlink:href="~@/assets/img/icons.svg#arrow_dwn" />
         </svg>
       </button>
+
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <button class="users-filter__btn-pattern" v-bind="attrs" v-on="on">
+            <svg class="left">
+              <use xlink:href="~@/assets/img/icons.svg#filter_presets" />
+            </svg>
+            {{filterPatternSelected}}
+            <svg class="arrow">
+              <use xlink:href="~@/assets/img/icons.svg#arrow_dwn" />
+            </svg>
+          </button>
+        </template>
+
+        <v-list class="filter-dialog-patterns__list">
+          <v-list-item-group v-model="filterPatternItem" :value="filterPatternItem" mandatory>
+            <v-list-item
+              v-for="(item, i) in filterPatternItems"
+              class="filter-dialog-patterns__list-item"
+              :value="i"
+              :key="i"
+              active-class="filter-dialog-patterns__list-item_active"
+            >
+              <v-list-item-content class="filter-dialog-patterns__content">
+                <v-list-item-title class="filter-dialog-patterns__title">{{item}}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-menu>
+
+      <v-dialog
+        content-class="users-filter__dialog filter-dialog"
+        v-model="filter"
+        persistent
+        width="390px"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <div class="users-filter__custom-date-input" v-show="isPatternCustom">
+            <v-text-field v-model="dateRangeText" readonly v-bind="attrs" v-on="on"></v-text-field>
+          </div>
+        </template>
+
+        <v-date-picker
+          v-model="filterDates"
+          first-day-of-week="1"
+          width="100%"
+          :full-width="true"
+          :no-title="true"
+          :range="true"
+          :reactive="true"
+          :show-current="true"
+          :allowed-dates="allowedDates"
+        >
+          <v-btn class="btn btn_white" text @click="closeFilter">Отмена</v-btn>
+          <v-btn class="btn btn_red" text @click="saveFilter" :disabled="buttonSaveDisable">Обновить</v-btn>
+        </v-date-picker>
+      </v-dialog>
     </div>
 
     <div class="users-filter__area-right">
       <button class="btn btn_white">Выгрузить</button>
       <button class="btn btn_red" @click="addItem">Добавить контакты</button>
-
-      <v-dialog
-        content-class="users-filter__dialog filter-dialog"
-        v-model="filter"
-        overlay-color="rgba(240, 246, 252, 0.7)"
-        overlay-opacity="1"
-        max-width="60%"
-      >
-        <v-container class="transparent">
-          <v-row>
-            <v-col cols="4" class="filter-dialog__patterns filter-dialog-patterns">
-              <v-card class="filter-dialog-patterns__card">
-                <v-list class="filter-dialog-patterns__list">
-                  <v-list-item-group v-model="filterPatternItem" mandatory>
-                    <template v-for="(item, i) in filterPatternItems">
-                      <v-list-item
-                        class="filter-dialog-patterns__list-item"
-                        :value="i"
-                        :key="i"
-                        active-class="filter-dialog-patterns__list-item_active"
-                      >
-                        <v-list-item-content class="filter-dialog-patterns__content">
-                          <v-list-item-title class="filter-dialog-patterns__title">{{item}}</v-list-item-title>
-                        </v-list-item-content>
-                      </v-list-item>
-                    </template>
-                  </v-list-item-group>
-                </v-list>
-              </v-card>
-            </v-col>
-
-            <v-col cols="8" class="filter-dialog__picker filter-dialog-picker">
-              <v-card class="filter-dialog-picker__card">
-                <v-card-text class="filter-dialog-picker__text">
-                  <v-date-picker
-                    v-model="filterDates"
-                    first-day-of-week="1"
-                    width="100%"
-                    :full-width="true"
-                    :no-title="true"
-                    :range="true"
-                    :reactive="true"
-                    :show-current="true"
-                    :allowed-dates="allowedDates"
-                  ></v-date-picker>
-                </v-card-text>
-
-                <v-card-actions class="filter-dialog-picker__actions">
-                  <v-btn class="btn btn_white" text @click="closeFilter">Отмена</v-btn>
-                  <v-btn
-                    class="btn btn_red"
-                    text
-                    @click="saveFilter"
-                    :disabled="buttonSaveDisable"
-                  >Обновить</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-dialog>
     </div>
   </section>
 </template>
@@ -96,13 +84,8 @@ export default {
   data() {
     return {
       filterState: false,
+      isPatternCustom: false,
     };
-  },
-
-  watch: {
-    filter(val) {
-      val || this.closeFilter();
-    },
   },
 
   computed: {
@@ -127,6 +110,13 @@ export default {
       set(val) {
         this.$store.dispatch('SET_FILTER_PATTERN_ITEM', val);
         this.$store.dispatch('SET_FILTER_DATES', []);
+
+        if (val === 'custom') {
+          this.filterState = true;
+        } else {
+          this.saveFilter();
+          this.isPatternCustom = false;
+        }
       },
     },
     filterPatternItems() {
@@ -137,15 +127,72 @@ export default {
         return this.$store.getters.FILTER_DATES;
       },
       set(val) {
-        this.$store.dispatch('SET_FILTER_PATTERN_ITEM', 'custom');
         this.$store.dispatch('SET_FILTER_DATES', val);
       },
     },
-    buttonSaveDisable() {
-      const fd = new Date(this.$store.getters.FILTER_DATES[0]).getTime();
-      const sd = new Date(this.$store.getters.SELECTED_DATES[0]).getTime();
+    dateRangeText() {
+      const dates = this.filterDates;
+      const monthsNames = this.$store.getters.NAME_MONTHS;
+
+      if (dates.length == 1) {
+        const firstDate = new Date(dates[0]);
+        const firstDay = firstDate.getDate();
+        const firstMonth = firstDate.getMonth();
+        const firstYear = firstDate.getFullYear();
+        return ((firstDay < 10 ? '0' + firstDay : firstDay) +
+          ' ' +
+          monthsNames[firstMonth] +
+          ' ' +
+          firstYear);
+      }
       
-      return fd === sd ? true : false;
+      if (dates.length == 2) {
+        const firstDate = new Date(dates[0]);
+        const secondDate = new Date(dates[1]);
+
+        const firstDay = firstDate.getDate();
+        const firstMonth = firstDate.getMonth();
+        const firstYear = firstDate.getFullYear();
+        const secondDay = secondDate.getDate();
+        const secondMonth = secondDate.getMonth();
+        const secondYear = secondDate.getFullYear();
+
+        return (
+          (firstDay < 10 ? '0' + firstDay : firstDay) +
+          (firstMonth != secondMonth ? ' ' + monthsNames[firstMonth] : '') +
+          (firstYear != secondYear ? ' ' + firstYear : '') +
+          ' - ' +
+          (secondDay < 10 ? '0' + secondDay : secondDay) +
+          ' ' +
+          monthsNames[secondMonth] +
+          ' ' +
+          secondYear
+        );
+      }
+
+      return this.filterDates.join(' ~ ');
+    },
+    buttonSaveDisable() {
+      const fd = this.$store.getters.FILTER_DATES;
+      if (fd.length == 0) {
+        return true;
+      }
+
+      const sd = this.$store.getters.SELECTED_DATES;
+      if (sd.length > 0) {
+        for (let i = 0; i < fd.length; i++) {
+          const tsFd = new Date(fd[i]).getTime();
+          const tsSd = new Date(sd[i]).getTime();
+
+          if (tsFd != tsSd) {
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+      return false;
     },
     dateToday() {
       return this.$store.getters.DATE_FORMAT(0);
@@ -169,10 +216,11 @@ export default {
       this.$store.dispatch('SET_SELECTED_DATES');
       this.$store.dispatch('SET_FILTER_PATTERN_SELECTED');
       this.filterState = false;
+      this.isPatternCustom = true;
     },
     closeFilter() {
-      this.$store.dispatch('RESET_FILTER_DATES');
       this.$store.dispatch('RESET_FILTER_PATTERN_ITEM');
+      this.$store.dispatch('RESET_FILTER_DATES');
       this.filterState = false;
     },
   },
@@ -194,6 +242,7 @@ export default {
     background: transparent;
     height: 23px;
     padding: 0 20px 0 42px;
+    margin-left: 44px;
     font-size: 15px;
     line-height: 23px;
     font-weight: 400;
@@ -233,7 +282,6 @@ export default {
     background: transparent;
     height: 23px;
     padding: 0 20px 0 42px;
-    margin-left: 44px;
     font-size: 15px;
     line-height: 23px;
     font-weight: 400;
@@ -265,6 +313,38 @@ export default {
       width: 11px;
       height: 6px;
       transform: translateY(-50%);
+    }
+  }
+
+  &__custom-date-input {
+    position: relative;
+    display: inline-block;
+    height: 23px;
+    margin-left: 24px;
+    font-size: 15px;
+    line-height: 23px;
+    font-weight: 400;
+
+    &:hover {
+      .v-input input {
+        color: $color_font_red;
+      }
+    }
+
+    .v-input {
+      margin: 0;
+      padding: 0;
+
+      &__slot {
+        &::before,
+        &::after {
+          border: none !important;
+        }
+      }
+
+      input {
+        padding: 0;
+      }
     }
   }
 

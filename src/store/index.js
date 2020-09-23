@@ -18,7 +18,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     dialogForm: false,
-    filterDates: datesArray(patterns.default, []),
+    filterDates: [],
     selectedDates: datesArray(patterns.default, []),
     userEditedIndex: -1,
     nameMonth: nameMonth(),
@@ -42,7 +42,7 @@ export default new Vuex.Store({
     },
     SET_FILTER_DATES(state, content) {
       const item = state.filterPattern.item;
-
+      
       state.filterDates = datesArray(item, content);
     },
     RESET_FILTER_DATES(state) {
