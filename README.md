@@ -1,11 +1,11 @@
-# Test assignment using Vue.js and Vuetify
+# Vue test-task for Brighta
 
 ## About
-Job for a front-end developer vacancy. Development time is about 40 hours. Assembled using vue-cli, vuex, vuetify, sass.
-
-> Learn more about the task and see the links
-- **[Description of the task](https://ksawl.github.io/show.test.vue.brighta/)**
-- **[View page](https://show-test-vue-brighta.herokuapp.com/)**
+- Test-task for a front-end developer vacancy. 
+- Development time is about 40 hours. 
+- Tools: vue-cli, vuex, vuetify, sass.
+- Demo: https://show-test-vue-brighta.herokuapp.com/
+- Description of the task: https://ksawl.github.io/show.test.vue.brighta/
 
 ## Project setup
 ```
